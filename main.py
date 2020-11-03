@@ -131,11 +131,10 @@ def verificare_afisare():
 
 
 def conversie():
-    print('poof magie')
+    print('ceva magie sa se transforme in sintaxa normala, problem for tomorrow Alex')
 
 
-if x == 'n':
-    verificare_afisare()
 if x == 'r':
     conversie()
-    verificare_afisare()
+verificare_afisare()
+
