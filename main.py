@@ -72,7 +72,6 @@ else:
     sys.exit()
 
 # reprezentarea grafica a arborelui
-
 for rang in range(1, imax + 1):
     for pozitie in range(len(poz)):
         if poz[pozitie] == rang:
@@ -93,6 +92,7 @@ for rang in range(1, imax + 1):
                     tree.create_node(prop2[pozitie], pozitie)
                     pozprec = pozitie
                     poz[pozitie] = 0
+                    poz[pozitie-1] = 0
                     if ord('A') <= ord(prop2[pozitie + 1]) <= ord('Z'):
                         tree.create_node(prop2[pozitie + 1], pozitie + 1, parent=pozitie)
                         poz[pozitie+1] = 0
@@ -112,6 +112,7 @@ for rang in range(1, imax + 1):
                 if prop2[pozitie] == '¬':
                     tree.create_node(prop2[pozitie], pozitie, parent=pozprec)
                     poz[pozitie] = 0
+                    poz[pozitie-1] = 0
                     if ord('A') <= ord(prop2[pozitie + 1]) <= ord('Z'):
                         tree.create_node(prop2[pozitie + 1], pozitie + 1, parent=pozitie)
                         poz[pozitie + 1] = 0
