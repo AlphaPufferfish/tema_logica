@@ -2,15 +2,14 @@ import sys
 from treelib import Node, Tree
 tree = Tree()
 smn = ['∧', '∨', '⇒', '⇔']
+prop = input()
+prop = list(prop)
 
 x = input('''
 Introduceti felul sintaxei:
 normala: n
 relaxata: r
 ''')
-
-prop = input()
-prop = list(prop)
 
 def verificare_afisare():
     # verificarea corectitudinii in conformitate cu definitia
@@ -33,6 +32,18 @@ def verificare_afisare():
             poz[i] = pd-pi
             if pd - pi > imax:
                 imax = pd - pi
+            if prop[i] == '¬':
+                if ord('A') <= ord(prop[i+1]) <= ord('Z'):
+                    poz[i+1] = pd-pi
+                    poz[i+2] = pd-pi
+                    poz[i-1] = pd-pi
+            if prop[i] in smn:
+                if ord('A') <= ord(prop[i - 1]) <= ord('Z'):
+                    poz[i-1] = pd-pi
+                    poz[i-2] = pd-pi
+                if ord('A') <= ord(prop[i + 1]) <= ord('Z'):
+                    poz[i+1] = pd-pi
+                    poz[i+2] = pd-pi
 
     if len(prop) == 1 and ord('A') <= ord(prop[0]) <= ord('Z'):
         print('Sirul este formula propozitionala')
@@ -78,29 +89,44 @@ def verificare_afisare():
                         poz[pozitie] = 0
                         if ord('A') <= ord(prop2[pozitie + 1]) <= ord('Z'):
                             tree.create_node(prop2[pozitie + 1], pozitie + 1, parent=pozitie)
+                            poz[pozitie+1] = 0
+                            poz[pozitie+2] = 0
                         if ord('A') <= ord(prop2[pozitie - 1]) <= ord('Z'):
                             tree.create_node(prop2[pozitie - 1], pozitie - 1, parent=pozitie)
+                            poz[pozitie-1] = 0
+                            poz[pozitie-2] = 0
                     if prop2[pozitie] == '¬':
                         tree.create_node(prop2[pozitie], pozitie)
                         pozprec = pozitie
                         poz[pozitie] = 0
+                        poz[pozitie-1] = 0
                         if ord('A') <= ord(prop2[pozitie + 1]) <= ord('Z'):
                             tree.create_node(prop2[pozitie + 1], pozitie + 1, parent=pozitie)
+                            poz[pozitie+1] = 0
+                            poz[pozitie+2] = 0
                 else:
                     if prop2[pozitie] in smn:
                         tree.create_node(prop2[pozitie], pozitie, parent=pozprec)
                         poz[pozitie] = 0
                         if ord('A') <= ord(prop2[pozitie + 1]) <= ord('Z'):
                             tree.create_node(prop2[pozitie + 1], pozitie + 1, parent=pozitie)
+                            poz[pozitie + 1] = 0
+                            poz[pozitie+2] = 0
                         if ord('A') <= ord(prop2[pozitie - 1]) <= ord('Z'):
                             tree.create_node(prop2[pozitie - 1], pozitie - 1, parent=pozitie)
+                            poz[pozitie - 1] = 0
+                            poz[pozitie - 2] = 0
                     if prop2[pozitie] == '¬':
                         tree.create_node(prop2[pozitie], pozitie, parent=pozprec)
                         poz[pozitie] = 0
+                        poz[pozitie-1] = 0
                         if ord('A') <= ord(prop2[pozitie + 1]) <= ord('Z'):
                             tree.create_node(prop2[pozitie + 1], pozitie + 1, parent=pozitie)
+                            poz[pozitie + 1] = 0
+                            poz[pozitie + 2] = 0
                 if rang not in poz:
                     pozprec = pozitie
+
     tree.show()
 
 
@@ -111,3 +137,4 @@ def conversie():
 if x == 'r':
     conversie()
 verificare_afisare()
+
